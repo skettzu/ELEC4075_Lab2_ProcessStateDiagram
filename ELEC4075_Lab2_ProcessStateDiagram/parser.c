@@ -5,6 +5,13 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 
+/*
+
+CHANGE fp1 AND fp2 IN BOTH PARSER() AND MAIN() ACCORDING TO
+THE INPUT FILE THAT YOU WANT TO USE
+
+*/
+
 struct Process {
 	char pid[8];
 	char state[30];
@@ -121,12 +128,7 @@ void queue_parser(char* queue) {
 		temp_parse = strtok(NULL, " ");
 	}
 }
-/*
-To Do List:
 
-- Process for interrupt(This removes it from queue)
-
-*/
 int main()
 {
 	parser(); // run parser and stored parsed information in inp1_parsed.txt
@@ -412,6 +414,7 @@ int main()
 		printf("disk queue: %s\n", disk_q);
 		printf("printer queue: %s\n", printer_q);
 		printf("keyboard queue: %s\n", kb_q);
+		printf("\n");
 		for (int i = 0; i < 2; i++) {		// searches for previous updates and takes out '*'
 			if (prev_id[i] != 100) {
 				size_t temp_size = strlen(processes[prev_id[i]].state);
