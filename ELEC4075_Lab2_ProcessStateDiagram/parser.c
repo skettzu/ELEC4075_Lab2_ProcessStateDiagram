@@ -40,7 +40,7 @@ void parser() {
 
 	printf("Started parsing...\n");
 
-	//copy first line of the original file to the new filefile
+	//copy first line of the original file to the new file
 	if (fgets(str, sizeof(str), fp1) != NULL)
 		fprintf(fp2, "%s", str);
 
@@ -286,6 +286,7 @@ int main()
 							while (strcmp(temp_arr[i], "") != 0) {
 								if (strcmp(temp_arr[i], processes[temp_id - 1].pid) != 0) {
 									// Code to take out PID from queue
+									// Assuming LIFO, delete from top of the stack
 									size_t temp_size = strlen(disk_q);
 									disk_q[temp_size - 3] = '\0';
 								}
@@ -305,6 +306,7 @@ int main()
 							while (strcmp(temp_arr[i], "") != 0) {
 								if (strcmp(temp_arr[i], processes[temp_id - 1].pid) != 0) {
 									// Code to take out PID from queue
+									// Assuming LIFO, delete from top of the stack
 									size_t temp_size = strlen(printer_q);
 									printer_q[temp_size - 3] = '\0';
 								}
@@ -324,6 +326,7 @@ int main()
 							while (strcmp(temp_arr[i], "") != 0) {
 								if (strcmp(temp_arr[i], processes[temp_id - 1].pid) != 0) {
 									// Code to take out PID from queue
+									// Assuming LIFO, delete from top of the stack
 									size_t temp_size = strlen(kb_q);
 									kb_q[temp_size - 3] = '\0';
 								}
@@ -347,6 +350,7 @@ int main()
 							while (strcmp(temp_arr[i], "") != 0) {
 								if (strcmp(temp_arr[i], processes[temp_id - 1].pid) != 0) {
 									// Code to take out PID from queue
+									// Assuming LIFO, delete from top of the stack
 									size_t temp_size = strlen(disk_q);
 									disk_q[temp_size - 3] = '\0';
 								}
@@ -366,6 +370,7 @@ int main()
 							while (strcmp(temp_arr[i], "") != 0) {
 								if (strcmp(temp_arr[i], processes[temp_id - 1].pid) != 0) {
 									// Code to take out PID from queue
+									// Assuming LIFO, delete from top of the stack
 									size_t temp_size = strlen(printer_q);
 									printer_q[temp_size - 3] = '\0';
 								}
@@ -385,6 +390,7 @@ int main()
 							while (strcmp(temp_arr[i], "") != 0) {
 								if (strcmp(temp_arr[i], processes[temp_id - 1].pid) != 0) {
 									// Code to take out PID from queue
+									// Assuming LIFO, delete from top of the stack
 									size_t temp_size = strlen(kb_q);
 									kb_q[temp_size - 3] = '\0';
 								}
@@ -408,6 +414,11 @@ int main()
 			if (curr_processes[i] < -1) {
 				break;
 			}
+			if (strcmp(processes[curr_processes[i] - 1].state, "New") == 0) {
+				strcpy(processes[curr_processes[i] - 1].state, "Ready*");
+				prev_id[prev_track] = curr_processes[i] - 1;
+			}
+			
 			printf("%s %s ", processes[curr_processes[i] - 1].pid, processes[curr_processes[i] - 1].state);
 		}
 		printf("\n");
@@ -415,7 +426,7 @@ int main()
 		printf("printer queue: %s\n", printer_q);
 		printf("keyboard queue: %s\n", kb_q);
 		printf("\n");
-		for (int i = 0; i < 2; i++) {		// searches for previous updates and takes out '*'
+		for (int i = 0; i < 20; i++) {		// searches for previous updates and takes out '*'
 			if (prev_id[i] != 100) {
 				size_t temp_size = strlen(processes[prev_id[i]].state);
 				processes[prev_id[i]].state[temp_size - 1] = '\0';	// use end null character to cut off the last character
