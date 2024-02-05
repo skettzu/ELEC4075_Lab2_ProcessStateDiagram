@@ -7,3 +7,4 @@ P1 requests printer P6 dispatched
 P6 expires P2 dispatched 
 P2 terminated P9 interrupt 
 P11 in P5 terminated P6 dispatched 
+

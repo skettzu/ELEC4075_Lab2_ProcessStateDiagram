@@ -143,6 +143,7 @@ int main()
 	int first = 0;
 
 	struct Process processes[20];			// Create an array of 20 processes
+	// dynamically allocate memory for each q in case it overflows
 	char* printer_q=(char*)malloc(10 * sizeof(char));
 	char* disk_q = (char*)malloc(10 * sizeof(char));
 	char* kb_q = (char*)malloc(10 * sizeof(char));
@@ -235,6 +236,11 @@ int main()
 						}
 					}
 					strcpy(processes[temp_id - 1].state, "Blocked*");
+					prev_id[prev_track] = temp_id - 1;
+					prev_track++;
+				}
+				else if (strcmp(token_next, "admitted") == 0) {
+					strcpy(processes[temp_id - 1].state, "Ready*");
 					prev_id[prev_track] = temp_id - 1;
 					prev_track++;
 				}
@@ -413,10 +419,6 @@ int main()
 		for (int i = 0; i < 20; i++) {
 			if (curr_processes[i] < -1) {
 				break;
-			}
-			if (strcmp(processes[curr_processes[i] - 1].state, "New") == 0) {
-				strcpy(processes[curr_processes[i] - 1].state, "Ready*");
-				prev_id[prev_track] = curr_processes[i] - 1;
 			}
 			
 			printf("%s %s ", processes[curr_processes[i] - 1].pid, processes[curr_processes[i] - 1].state);
