@@ -260,9 +260,17 @@ int main()
 					prev_track++;
 				}
 				else if (strcmp(token_next, "out") == 0) {
-					strcat(processes[temp_id - 1].state, "/Suspended*");	// append Suspended state to end of state
-					prev_id[prev_track] = temp_id - 1;
-					prev_track++;
+					// check if running
+					if ((strcmp(processes[temp_id - 1].state, "Running") == 0) || (strcmp(processes[temp_id - 1].state, "Running*") == 0)) {
+						strcpy(processes[temp_id - 1].state, "Ready/Suspended*");
+						prev_id[prev_track] = temp_id - 1;
+						prev_track++;
+					}
+					else {
+						strcat(processes[temp_id - 1].state, "/Suspended*");	// append Suspended state to end of state
+						prev_id[prev_track] = temp_id - 1;
+						prev_track++;
+					}
 				}
 				else if (strcmp(token_next, "in") == 0) {
 					size_t temp_size = strlen(processes[temp_id - 1].state);
